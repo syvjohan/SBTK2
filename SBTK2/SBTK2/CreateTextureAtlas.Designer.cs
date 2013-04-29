@@ -69,6 +69,8 @@
             // 
             // listViewAddedTextures
             // 
+            this.listViewAddedTextures.AllowDrop = true;
+            this.listViewAddedTextures.LargeImageList = this.loadedImages;
             this.listViewAddedTextures.Location = new System.Drawing.Point(21, 70);
             this.listViewAddedTextures.Name = "listViewAddedTextures";
             this.listViewAddedTextures.Size = new System.Drawing.Size(187, 391);

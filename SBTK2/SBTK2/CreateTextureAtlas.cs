@@ -25,22 +25,26 @@ namespace SBTK2
             
         }
 
+        /// <summary>
+        /// Loads the images from textureListManager's List, and imputs them into the listview.
+        /// </summary>
         public void LoadImages()
         {
             //Clears the list of old data
-            loadedImages.Images.Clear();
             listViewAddedTextures.Items.Clear();
+            loadedImages.Images.Clear();
+            
 
-            for (int m = 0; m < textureListManager.NrOfImages; m++)
+            for (int i = 0; i < textureListManager.NrOfImages; i++)
             {
                 //Adds the image from the textureListManager at the specific index to the imageList
-                loadedImages.Images.Add(textureListManager.getImageAtIndex(m));
+                loadedImages.Images.Add(textureListManager.getImageAtIndex(i));
 
                 //Creates a temporary ListViewItem to hold the image index
                 ListViewItem item = new ListViewItem();
 
                 //Sets the image index
-                item.ImageIndex = m;
+                item.ImageIndex = i;
 
                 //Adds the image at the image index to the listview
                 listViewAddedTextures.Items.Add(item);
