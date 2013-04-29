@@ -59,16 +59,21 @@ namespace SBTK2
 
             //Enables multiselect
             openFileDialog.Multiselect = true;
-            openFileDialog.Filter = "Image Files(*.jpg; *.jpeg; *.bmp; *.png;)";
+            openFileDialog.Filter = "Image Files(*.jpg; *.jpeg; *.bmp; *.png;) | *.png; *.jpg; *. jpeg; *.bmp";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                for (int i = 0; i < openFileDialog.FileName.Length; i++)
+                for (int i = 0; i < openFileDialog.FileNames.Length; i++)
                 {
-                    this.image.Add(Image.FromFile(openFileDialog.FileName[i]));
+                    this.image.Add(Image.FromFile(openFileDialog.FileNames[i]));
                 }
             }
-               
+
+            //Check the file type
+            int dotIndex = openFileDialog.FileName.LastIndexOf('.');
+            imageExtension = openFileDialog.FileName.Substring(
+                    openFileDialog.FileName.Length - dotIndex
+                    );
         }
 
         /// <summary>
@@ -90,7 +95,7 @@ namespace SBTK2
 
                         if (IsFileCorrectType(s, ALLOWED_IMAGE_EXTENSIONS))
                         {
-                            AddFile(s);
+                            //AddFile(s);
                         }
                         else
                         {

@@ -52,6 +52,7 @@
     <Compile Include="CreateTextureAtlas.Designer.cs">
       <DependentUpon>CreateTextureAtlas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sprite.cs" />
     <Compile Include="TextureListManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
