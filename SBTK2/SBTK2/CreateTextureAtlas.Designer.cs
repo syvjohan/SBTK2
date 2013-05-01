@@ -56,6 +56,9 @@
             this.panelCutTexture.Name = "panelCutTexture";
             this.panelCutTexture.Size = new System.Drawing.Size(299, 391);
             this.panelCutTexture.TabIndex = 1;
+            this.panelCutTexture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelCutTexture_MouseDown);
+            this.panelCutTexture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelCutTexture_MouseMove);
+            this.panelCutTexture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelCutTexture_MouseUp);
             // 
             // btnAddImage
             // 
