@@ -76,6 +76,7 @@
             this.listViewAddedTextures.Size = new System.Drawing.Size(187, 391);
             this.listViewAddedTextures.TabIndex = 0;
             this.listViewAddedTextures.UseCompatibleStateImageBehavior = false;
+            this.listViewAddedTextures.SelectedIndexChanged += new System.EventHandler(this.listViewAddedTextures_SelectedIndexChanged);
             // 
             // loadedImages
             // 

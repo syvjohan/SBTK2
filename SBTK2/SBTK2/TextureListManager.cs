@@ -37,7 +37,7 @@ namespace SBTK2
         /// </summary>
         /// <param name="index">specified index</param>
         /// <returns>The image at the index</returns>
-        public Image getImageAtIndex(int index)
+        public Image GetImageAtIndex(int index)
         {
             return image[index];
         }

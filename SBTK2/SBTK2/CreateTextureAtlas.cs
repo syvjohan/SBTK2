@@ -13,6 +13,8 @@ namespace SBTK2
     {
         TextureListManager textureListManager = new TextureListManager();
 
+        private Bitmap selectedImage;
+
         public FormTextureAtlas()
         {
             InitializeComponent();
@@ -38,7 +40,7 @@ namespace SBTK2
             for (int i = 0; i < textureListManager.NrOfImages; i++)
             {
                 //Adds the image from the textureListManager at the specific index to the imageList
-                loadedImages.Images.Add(textureListManager.getImageAtIndex(i));
+                loadedImages.Images.Add(textureListManager.GetImageAtIndex(i));
 
                 //Creates a temporary ListViewItem to hold the image index
                 ListViewItem item = new ListViewItem();
@@ -51,6 +53,25 @@ namespace SBTK2
             }
             //Updates
             listViewAddedTextures.Update();
+        }
+
+        // shows a image in the panelCutTexture when the user select a image in the listViewAddedTexture.
+        private void listViewAddedTextures_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedImageIndex = listViewAddedTextures.SelectedItems[0].ImageIndex;
+            DrawSelectedTexture(selectedImageIndex);
+        }
+
+        // Draw  image in a panel.
+        private void DrawSelectedTexture(int index)
+        {
+            using (Graphics graphics = panelCutTexture.CreateGraphics())
+            {
+
+                panelCutTexture.BackgroundImage = textureListManager.GetImageAtIndex(index);
+                selectedImage = (Bitmap)panelCutTexture.BackgroundImage;
+
+            }
         }
     }
 }
