@@ -26,6 +26,12 @@ namespace SBTK2
         private Bitmap selectedImage;
         private Bitmap cutImage;
 
+        // ReDraw the rectangle
+        private Bitmap canvas;
+        private int panelSizeX = 1024;
+        private int panelSizeY = 1024;
+        Point rectPos = new Point(0, 0);
+
         public FormTextureAtlas()
         {
             InitializeComponent();
@@ -91,6 +97,11 @@ namespace SBTK2
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void panelCutTexture_MouseDown(object sender, MouseEventArgs e)
         {
             if (cuttingRectangle != null && panelCutTexture.BackgroundImage != null)
@@ -156,6 +167,11 @@ namespace SBTK2
             DrawRectangle(e);
         }
 
+        /// <summary>
+        ///  Clone the cuttingRectangle area and save it in the Bitmap cutImage.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void panelCutTexture_MouseUp(object sender, MouseEventArgs e)
         {
             if (cuttingRectangle != null && selectedImage != null)
@@ -165,6 +181,37 @@ namespace SBTK2
             }
         }
 
-      
+        private void panelTextureCollector_Click(object sender, EventArgs e)
+        {
+            ReDrawRectangle();
+
+            if (cutImage != null)
+            {
+                rectPos = Cursor.Position;
+                rectPos = panelTextureCollector.PointToClient(rectPos);
+                rectPos.X -= cutImage.Width / 2;
+                rectPos.Y -= cutImage.Height / 2;
+
+                Graphics graphics = Graphics.FromImage(canvas);
+                graphics.DrawImage(cutImage, rectPos);
+                panelTextureCollector.BackgroundImage = canvas;
+                panelTextureCollector.Refresh();
+            }
+        }
+
+        private void ReDrawRectangle()
+        {
+            canvas = new Bitmap(panelSizeX, panelSizeY);
+            panelTextureCollector.BackgroundImage = canvas;
+
+            Graphics graphicsCanvas = Graphics.FromImage((Image)canvas);
+
+            Brush brush = new SolidBrush(Color.Transparent);
+            graphicsCanvas.FillRectangle(brush, new Rectangle(0, 0, panelSizeX, panelSizeY));
+
+            graphicsCanvas = panelTextureCollector.CreateGraphics();
+            graphicsCanvas.DrawImage(canvas, new Point(0, 0));
+
+        }
     }
 }

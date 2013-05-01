@@ -45,6 +45,7 @@
             this.panelTextureCollector.Name = "panelTextureCollector";
             this.panelTextureCollector.Size = new System.Drawing.Size(413, 391);
             this.panelTextureCollector.TabIndex = 0;
+            this.panelTextureCollector.Click += new System.EventHandler(this.panelTextureCollector_Click);
             // 
             // panelCutTexture
             // 
