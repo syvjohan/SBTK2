@@ -14,8 +14,6 @@ namespace SBTK2
     {
         TextureListManager textureListManager = new TextureListManager();
 
-        
-
         // For the rectangle 
         private Rectangle cuttingRectangle;
         private int recPositionX;
@@ -83,7 +81,7 @@ namespace SBTK2
         }
 
         /// <summary>
-        /// Draw one image in a panel.
+        /// Draw one image in the panel panelCutTexture.
         /// </summary>
         /// <param name="index"></param>
         private void DrawSelectedTexture(int index)
@@ -123,7 +121,9 @@ namespace SBTK2
         }
 
         /// <summary>
+        /// if mouse move is true and cutImage is not false draw a rectangle.
         /// Drawing a rectangle in a panel and get called by the the MouseMove event.
+        /// 
         /// </summary>
         /// <param name="e"></param>
         private void DrawRectangle(MouseEventArgs e)
@@ -181,6 +181,11 @@ namespace SBTK2
             }
         }
 
+        /// <summary>
+        ///  if cutImage not is null, draw cutImage in the panelTextureCollector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void panelTextureCollector_Click(object sender, EventArgs e)
         {
             ReDrawRectangle();
@@ -214,22 +219,32 @@ namespace SBTK2
 
         }
 
+        /// <summary>
+        ///  Enter and call the DragEnter method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listViewAddedTexture_DragEnter(object sender, DragEventArgs e)
         {
             textureListManager.DragEnterGeneric(sender, e);
         }
 
-        private void listViewAddedTexture_DragLeave(object sender, DragEventArgs e)
-        {
-            textureListManager.DragDropLeave(sender, e);
-        }
-
+        /// <summary>
+        ///  Call DragDrop and load the image into the listView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listViewAddedTexture_DragDrop(object sender, DragEventArgs e)
         {
             textureListManager.DragDropFromDesktop(sender, e);
             LoadImages();
         }
 
+        /// <summary>
+        ///  Leave the DragDrop event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listViewAddedTexture_DragLeave(object sender, EventArgs e)
         {
             textureListManager.DragDropLeave(sender, e);
