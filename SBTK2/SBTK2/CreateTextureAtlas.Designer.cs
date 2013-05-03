@@ -81,6 +81,9 @@
             this.listViewAddedTextures.TabIndex = 0;
             this.listViewAddedTextures.UseCompatibleStateImageBehavior = false;
             this.listViewAddedTextures.SelectedIndexChanged += new System.EventHandler(this.listViewAddedTextures_SelectedIndexChanged);
+            this.listViewAddedTextures.DragDrop += new System.Windows.Forms.DragEventHandler(this.listViewAddedTexture_DragDrop);
+            this.listViewAddedTextures.DragEnter += new System.Windows.Forms.DragEventHandler(this.listViewAddedTexture_DragEnter);
+            this.listViewAddedTextures.DragLeave += new System.EventHandler(this.listViewAddedTexture_DragLeave);
             // 
             // loadedImages
             // 

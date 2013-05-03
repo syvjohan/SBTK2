@@ -129,7 +129,7 @@ namespace SBTK2
                     }
                     else
                     {
-                        MessageBox.Show("File not found");
+                        MessageBox.Show("File format is not valid");
                     }
                 }
             }
@@ -140,7 +140,7 @@ namespace SBTK2
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void DragDropLeave(object sender, DragEventArgs e)
+        public void DragDropLeave(object sender, EventArgs e)
         {
             draggingItemOverAtlas = false;
         }

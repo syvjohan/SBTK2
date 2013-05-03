@@ -213,5 +213,26 @@ namespace SBTK2
             graphicsCanvas.DrawImage(canvas, new Point(0, 0));
 
         }
+
+        private void listViewAddedTexture_DragEnter(object sender, DragEventArgs e)
+        {
+            textureListManager.DragEnterGeneric(sender, e);
+        }
+
+        private void listViewAddedTexture_DragLeave(object sender, DragEventArgs e)
+        {
+            textureListManager.DragDropLeave(sender, e);
+        }
+
+        private void listViewAddedTexture_DragDrop(object sender, DragEventArgs e)
+        {
+            textureListManager.DragDropFromDesktop(sender, e);
+            LoadImages();
+        }
+
+        private void listViewAddedTexture_DragLeave(object sender, EventArgs e)
+        {
+            textureListManager.DragDropLeave(sender, e);
+        }
     }
 }
