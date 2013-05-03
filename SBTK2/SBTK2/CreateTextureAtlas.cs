@@ -45,7 +45,7 @@ namespace SBTK2
         }
 
         /// <summary>
-        /// Loads the images from textureListManager's List, and imputs them into the listview.
+        /// Loads the images from textureListManager's List, and puts them into the listview.
         /// </summary>
         public void LoadImages()
         {

@@ -13,6 +13,8 @@ namespace SBTK2
         // uses to validate format.
         private readonly string[] ALLOWED_IMAGE_EXTENSIONS = { ".jpg", ".jpeg", ".png", ".bmp" };
 
+        private bool draggingItemOverAtlas = false; 
+
         List<Image> image = new List<Image>();
 
         /// <summary>
@@ -77,12 +79,34 @@ namespace SBTK2
         }
 
         /// <summary>
+        ///  DragEnter checks the item and validate if it´s a file or bitmap. If true, copy the item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void DragEnterGeneric(object sender, DragEventArgs e)
+        {
+            draggingItemOverAtlas = true;
+
+            // if the data item is a file or a bitmap
+            if (e.Data.GetDataPresent(typeof(ListViewItem)) ||
+                e.Data.GetDataPresent(DataFormats.FileDrop) ||
+                e.Data.GetDataPresent(DataFormats.Bitmap))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        /// <summary>
         ///  Check to se if the choosen object exist and uses the method IsFileCorrectType to verify that the format is ok.
         ///  If ok add image to listView via  AddFile and AddImage.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void FileFormats(object sender, DragEventArgs e)
+        public void DragDropFromDesktop(object sender, DragEventArgs e)
         {
             string[] handles = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             if (handles != null)
@@ -95,7 +119,7 @@ namespace SBTK2
 
                         if (IsFileCorrectType(s, ALLOWED_IMAGE_EXTENSIONS))
                         {
-                            //AddFile(s);
+                            AddFile(s);
                         }
                         else
                         {
@@ -109,6 +133,16 @@ namespace SBTK2
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Leaving the DragDrop events
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void DragDropLeave(object sender, DragEventArgs e)
+        {
+            draggingItemOverAtlas = false;
         }
 
         /// <summary>
@@ -130,6 +164,16 @@ namespace SBTK2
             }
 
             return isCorrect;
-        } 
+        }
+
+        /// <summary>
+        /// Adds the files to the list<Image>image in TextureListManager
+        /// </summary>
+        /// <param name="fullFilePath"></param>
+        private void AddFile(string fullFilePath)
+        {
+            Image picture = Image.FromFile(fullFilePath);
+            AddImage(picture);
+        }
     }
 }
