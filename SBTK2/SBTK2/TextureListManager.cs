@@ -17,8 +17,46 @@ namespace SBTK2
 
         List<Image> image = new List<Image>();
 
+        List<Bitmap> cuttedBitmap = new List<Bitmap>();
+
         /// <summary>
-        /// Gets or sets the images stored for the thumbnail list.
+        ///  Gets or sets the cuttedBitmaps stored in the Bitmap list
+        /// </summary>
+        public List<Bitmap> Bitmaps
+        {
+            get { return this.cuttedBitmap; }
+            set { this.cuttedBitmap = value; }
+        }
+
+        /// <summary>
+        /// Gets the number of stored bitmaps.
+        /// </summary>
+        public int NrOfBitmaps
+        {
+            get { return cuttedBitmap.Count; }
+        }
+
+        /// <summary>
+        /// Adds an bitmap object to the list<Bitmap>cuttedBitmaps
+        /// </summary>
+        /// <param name="imageInput"></param>
+        public void AddBitmap(Bitmap bitmapInput)
+        {
+            this.image.Add(bitmapInput);
+        }
+
+        /// <summary>
+        /// Gets the cuttedBitmaps at the specified index
+        /// </summary>
+        /// <param name="index">specified index</param>
+        /// <returns>The image at the index</returns>
+        public Bitmap GetBitmapAtIndex(int index)
+        {
+            return cuttedBitmap[index];
+        }
+
+        /// <summary>
+        /// Gets or sets the images stored in the Image list
         /// </summary>
         public List<Image> Images
         {

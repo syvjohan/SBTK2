@@ -88,10 +88,8 @@ namespace SBTK2
         {
             using (Graphics graphics = panelCutTexture.CreateGraphics())
             {
-
                 panelCutTexture.BackgroundImage = textureListManager.GetImageAtIndex(index);
                 selectedImage = (Bitmap)panelCutTexture.BackgroundImage;
-
             }
         }
 
@@ -176,39 +174,17 @@ namespace SBTK2
         {
             if (cuttingRectangle != null && selectedImage != null)
             {
-                cutImage = null;
-                cutImage = selectedImage.Clone(cuttingRectangle, PixelFormat.Format32bppArgb);
-            }
-        }
-
-        /// <summary>
-        ///  if cutImage not is null, draw cutImage in the panelTextureCollector
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void panelTextureCollector_Click(object sender, EventArgs e)
-        {
-            ReDrawRectangle();
-
-            if (cutImage != null)
-            {
-                rectPos = Cursor.Position;
-                rectPos = panelTextureCollector.PointToClient(rectPos);
-                rectPos.X -= cutImage.Width / 2;
-                rectPos.Y -= cutImage.Height / 2;
-
-                Graphics graphics = Graphics.FromImage(canvas);
-                graphics.DrawImage(cutImage, rectPos);
-                panelTextureCollector.BackgroundImage = canvas;
-                panelTextureCollector.Refresh();
+                textureListManager.AddBitmap( new Bitmap( selectedImage.Clone(cuttingRectangle, PixelFormat.Format32bppArgb)));
             }
         }
 
         private void ReDrawRectangle()
         {
             canvas = new Bitmap(panelSizeX, panelSizeY);
+
             panelTextureCollector.BackgroundImage = canvas;
 
+            // casta from Image to canvas (bitmap)
             Graphics graphicsCanvas = Graphics.FromImage((Image)canvas);
 
             Brush brush = new SolidBrush(Color.Transparent);
@@ -248,6 +224,31 @@ namespace SBTK2
         private void listViewAddedTexture_DragLeave(object sender, EventArgs e)
         {
             textureListManager.DragDropLeave(sender, e);
+        }
+
+        private void panelTextureCollector_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Enables scrolling (Y) with the mouse wheel.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void panelCutTexture_MouseEnter(object sender, EventArgs e)
+        {
+            panelCutTexture.Focus();
+        }
+
+        /// <summary>
+        /// Enables scrolling (Y) with the mouse wheel.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void panelTextureCollector_MouseEnter(object sender, EventArgs e)
+        {
+            panelTextureCollector.Focus();
         }
     }
 }
