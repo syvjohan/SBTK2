@@ -42,7 +42,10 @@ namespace SBTK2
         /// <param name="imageInput"></param>
         public void AddBitmap(Bitmap bitmapInput)
         {
-            this.image.Add(bitmapInput);
+            if (cuttedBitmap != null) return;
+            {
+                this.cuttedBitmap.Add(bitmapInput);
+            }
         }
 
         /// <summary>
@@ -53,6 +56,29 @@ namespace SBTK2
         public Bitmap GetBitmapAtIndex(int index)
         {
             return cuttedBitmap[index];
+        }
+
+        /// <summary>
+        ///  Delete selected Bitmap in cuttedBitmap
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool DeleteBitmap(int index)
+        {
+            if (NrOfBitmaps >= 0)
+            {
+                cuttedBitmap.RemoveAt(index);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        ///  Clear the hole list of cuttedBitmaps
+        /// </summary>
+        public void Clear()
+        {
+            cuttedBitmap.Clear();
         }
 
         /// <summary>
@@ -89,7 +115,10 @@ namespace SBTK2
         /// <param name="imageInput"></param>
         public void AddImage(Image imageInput)
         {
-            this.image.Add(imageInput);
+            if (image != null) return;
+            {
+                this.image.Add(imageInput);
+            }
         }
 
         // Open a image using OpenFileDialog.

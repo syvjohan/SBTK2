@@ -232,7 +232,7 @@ namespace SBTK2
         }
 
         /// <summary>
-        /// Enables scrolling (Y) with the mouse wheel.
+        /// Enables scrolling (Y-axel) with the mouse wheel.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -242,7 +242,7 @@ namespace SBTK2
         }
 
         /// <summary>
-        /// Enables scrolling (Y) with the mouse wheel.
+        /// Enables scrolling (Y-axel) with the mouse wheel.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
