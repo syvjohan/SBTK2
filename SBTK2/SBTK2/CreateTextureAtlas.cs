@@ -182,11 +182,9 @@ namespace SBTK2
               mouseDrawRec = false;
               if (cuttingRectangle != null && selectedImage != null)
               {
-
                   cutImage = null;
                   cutImage = selectedImage.Clone(cuttingRectangle, PixelFormat.Format32bppArgb);
                   //textureListManager.AddBitmap(cutImage);
-                  cutImage.Dispose();
               }
 
         }
