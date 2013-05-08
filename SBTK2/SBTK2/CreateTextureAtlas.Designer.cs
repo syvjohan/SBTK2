@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelCutTexture = new System.Windows.Forms.Panel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnAddImage = new System.Windows.Forms.Button();
             this.listViewAddedTextures = new System.Windows.Forms.ListView();
             this.loadedImages = new System.Windows.Forms.ImageList(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panelTextureCollector = new System.Windows.Forms.Panel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelCutTexture.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -49,7 +49,7 @@
             this.panelCutTexture.AutoScrollMinSize = new System.Drawing.Size(1024, 1024);
             this.panelCutTexture.AutoSize = true;
             this.panelCutTexture.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelCutTexture.BackColor = System.Drawing.Color.Red;
+            this.panelCutTexture.BackColor = System.Drawing.Color.White;
             this.panelCutTexture.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelCutTexture.Controls.Add(this.flowLayoutPanel1);
             this.panelCutTexture.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -62,6 +62,15 @@
             this.panelCutTexture.MouseEnter += new System.EventHandler(this.panelCutTexture_MouseEnter);
             this.panelCutTexture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelCutTexture_MouseMove);
             this.panelCutTexture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelCutTexture_MouseUp);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(1, -2);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(0, 0);
+            this.flowLayoutPanel1.TabIndex = 0;
             // 
             // btnAddImage
             // 
@@ -115,7 +124,7 @@
             this.panelTextureCollector.AutoScrollMinSize = new System.Drawing.Size(1024, 1024);
             this.panelTextureCollector.AutoSize = true;
             this.panelTextureCollector.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelTextureCollector.BackColor = System.Drawing.Color.Teal;
+            this.panelTextureCollector.BackColor = System.Drawing.Color.White;
             this.panelTextureCollector.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelTextureCollector.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTextureCollector.Location = new System.Drawing.Point(0, 0);
@@ -124,15 +133,6 @@
             this.panelTextureCollector.TabIndex = 0;
             this.panelTextureCollector.Click += new System.EventHandler(this.panelTextureCollector_Click);
             this.panelTextureCollector.MouseEnter += new System.EventHandler(this.panelTextureCollector_MouseEnter);
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(1, -2);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(0, 0);
-            this.flowLayoutPanel1.TabIndex = 0;
             // 
             // FormTextureAtlas
             // 

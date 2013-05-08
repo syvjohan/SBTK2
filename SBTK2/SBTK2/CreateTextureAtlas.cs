@@ -33,6 +33,13 @@ namespace SBTK2
         public FormTextureAtlas()
         {
             InitializeComponent();
+            InitializeLocalComponents();
+        }
+
+        private void InitializeLocalComponents()
+        {
+            canvas = new Bitmap(panelSizeX, panelSizeY);
+            panelCutTexture.BackgroundImage = canvas;
         }
 
         private void btnAddImage_Click(object sender, EventArgs e)
@@ -172,18 +179,20 @@ namespace SBTK2
         /// <param name="e"></param>
         private void panelCutTexture_MouseUp(object sender, MouseEventArgs e)
         {
-            if (cuttingRectangle != null && selectedImage != null)
-            {
-                textureListManager.AddBitmap( new Bitmap( selectedImage.Clone(cuttingRectangle, PixelFormat.Format32bppArgb)));
-            }
+              mouseDrawRec = false;
+              if (cuttingRectangle != null && selectedImage != null)
+              {
+
+                  cutImage = null;
+                  cutImage = selectedImage.Clone(cuttingRectangle, PixelFormat.Format32bppArgb);
+                  //textureListManager.AddBitmap(cutImage);
+                  cutImage.Dispose();
+              }
+
         }
 
-        private void ReDrawRectangle()
+        private void ReDrawRectangle(object sender, PaintEventArgs e)
         {
-            canvas = new Bitmap(panelSizeX, panelSizeY);
-
-            panelTextureCollector.BackgroundImage = canvas;
-
             // casta from Image to canvas (bitmap)
             Graphics graphicsCanvas = Graphics.FromImage((Image)canvas);
 
@@ -228,7 +237,18 @@ namespace SBTK2
 
         private void panelTextureCollector_Click(object sender, EventArgs e)
         {
+            if (cutImage != null)
+            {
+                rectPos = Cursor.Position;
+                rectPos = panelTextureCollector.PointToClient(rectPos);
+                rectPos.X -= cutImage.Width / 2;
+                rectPos.Y -= cutImage.Height / 2;
 
+                Graphics g = Graphics.FromImage(canvas);
+                g.DrawImage(cutImage, rectPos);
+                panelTextureCollector.BackgroundImage = canvas;
+                panelTextureCollector.Refresh();
+            }
         }
 
         /// <summary>
