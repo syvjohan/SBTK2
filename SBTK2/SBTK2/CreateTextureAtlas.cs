@@ -83,8 +83,12 @@ namespace SBTK2
         /// <param name="sender"></param>
         private void listViewAddedTextures_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int selectedImageIndex = listViewAddedTextures.SelectedItems[0].ImageIndex;
-            DrawSelectedTexture(selectedImageIndex);
+            if (listViewAddedTextures.SelectedItems != null)
+            {
+                panelCutTexture.Controls.Clear();
+                int selectedImageIndex = listViewAddedTextures.SelectedItems[0].ImageIndex;
+                DrawSelectedTexture(selectedImageIndex);
+            }
         }
 
         /// <summary>
