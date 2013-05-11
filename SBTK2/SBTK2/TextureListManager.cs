@@ -105,7 +105,7 @@ namespace SBTK2
         /// <returns>The image at the index</returns>
         public Image GetImageAtIndex(int index)
         {
-            return image[index];
+                return image[index];
         }
         string imageExtension = "";
 
