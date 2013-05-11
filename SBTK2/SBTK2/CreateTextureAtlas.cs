@@ -24,7 +24,6 @@ namespace SBTK2
         private Bitmap selectedImage;
         private Bitmap cutImage;
         private Bitmap drawImage;
-       
 
         // ReDraw the rectangle
         private Bitmap canvas;
@@ -34,10 +33,14 @@ namespace SBTK2
 
         List<TextureRect> textureClips;
 
+        //timer for the Paint events
+        Timer timer;
+
         public FormTextureAtlas()
         {
             InitializeComponent();
             InitializeLocalComponents();
+            TimerUpdate();
 
             textureClips = new List<TextureRect>();
         }
@@ -52,6 +55,23 @@ namespace SBTK2
             drawImage = new Bitmap(panelSizeX, panelSizeY);
             
             panelCutTexture.Paint += new PaintEventHandler(panelCutTexture_Paint);
+        }
+
+        public void TimerUpdate()
+        {
+            timer = new Timer();
+
+            timer.Tick += new EventHandler(timer_Tick);
+
+
+            timer.Interval = (1000 / 30); // timer will tick 30 times every second
+            timer.Enabled = true;
+            timer.Start();
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            MessageBox.Show("kj");
         }
 
         private void btnAddImage_Click(object sender, EventArgs e)
@@ -116,7 +136,7 @@ namespace SBTK2
             graphics = panelCutTexture.CreateGraphics();
 
             graphics.DrawImage(drawImage, new Point(0, 0));
-            ReDrawRectangle(sender, e);
+            
         }
 
         private void ReDrawRectangle(object sender, PaintEventArgs e)
@@ -139,7 +159,7 @@ namespace SBTK2
         /// <param name="e"></param>
         private void panelCutTexture_MouseDown(object sender, MouseEventArgs e)
         {
-            if (cuttingRectangle != null && selectedImage != null)
+            if (cuttingRectangle != null && drawImage != null)
             {
                 if (e.X >= recPositionX && e.X <= (recPositionX + cuttingRectangle.Width) &&
                     e.Y >= recPositionY && e.Y <= (recPositionY + cuttingRectangle.Height))
@@ -308,8 +328,6 @@ namespace SBTK2
         {
             panelTextureCollector.Focus();
         }
-
-        
 
     }
 }

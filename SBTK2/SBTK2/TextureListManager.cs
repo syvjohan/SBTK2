@@ -218,7 +218,7 @@ namespace SBTK2
         /// <param name="filePath"></param>
         /// <param name="validExtensions"></param>
         /// <returns></returns>
-        private bool IsFileCorrectType(string filePath, string[] validExtensions)
+        public bool IsFileCorrectType(string filePath, string[] validExtensions)
         {
             bool isCorrect = false;
             foreach (string extension in validExtensions)
@@ -237,10 +237,16 @@ namespace SBTK2
         /// Adds the files to the list<Image>image in TextureListManager
         /// </summary>
         /// <param name="fullFilePath"></param>
-        private void AddFile(string fullFilePath)
+        public void AddFile(string fullFilePath)
         {
             Image picture = Image.FromFile(fullFilePath);
             AddImage(picture);
         }
+
+        /// <summary>
+        /// Timer will update 30 times every second
+        /// </summary>
+        
+
     }
 }
