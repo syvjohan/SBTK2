@@ -32,10 +32,14 @@ namespace SBTK2
         private int panelSizeY = 1024;
         Point rectPos = new Point(0, 0);
 
+        List<TextureRect> textureClips;
+
         public FormTextureAtlas()
         {
             InitializeComponent();
             InitializeLocalComponents();
+
+            textureClips = new List<TextureRect>();
         }
 
         private void InitializeLocalComponents()
@@ -46,6 +50,8 @@ namespace SBTK2
 
             //draw image in panelCutTexture
             drawImage = new Bitmap(panelSizeX, panelSizeY);
+            
+            panelCutTexture.Paint += new PaintEventHandler(panelCutTexture_Paint);
         }
 
         private void btnAddImage_Click(object sender, EventArgs e)
@@ -89,13 +95,19 @@ namespace SBTK2
         /// <param name="sender"></param>
         private void listViewAddedTextures_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listViewAddedTextures.SelectedItems != null)
+            if (listViewAddedTextures.SelectedItems.Count > 0)
             {
                 int selectedImageIndex = listViewAddedTextures.SelectedItems[0].ImageIndex;
-                panelCutTexture.BackgroundImage = textureListManager.GetImageAtIndex(selectedImageIndex);
-                selectedImage = (Bitmap)panelCutTexture.BackgroundImage;
+                //panelCutTexture.BackgroundImage = textureListManager.GetImageAtIndex(selectedImageIndex);
+                selectedImage = (Bitmap)textureListManager.GetImageAtIndex(selectedImageIndex);
 
-                panelCutTexture.Paint+=new PaintEventHandler(panelCutTexture_Paint);
+                Graphics g = Graphics.FromImage(drawImage);
+                Brush brush = new SolidBrush(Color.White);
+                g.FillRectangle(brush, new Rectangle(0, 0, drawImage.Width, drawImage.Height));
+
+                g.DrawImage(textureListManager.GetImageAtIndex(selectedImageIndex), new Point(0, 0));
+                //panelCutTexture.Paint+=new PaintEventHandler(panelCutTexture_Paint);
+                panelCutTexture.Refresh();
             }
         }
 
@@ -117,13 +129,12 @@ namespace SBTK2
             // casta from Image to canvas (bitmap)
             Graphics graphics = Graphics.FromImage((Image)drawImage);
 
-            Brush brush = new SolidBrush(Color.Transparent);
-            graphics.FillRectangle(brush, new Rectangle(0, 0, panelSizeX, panelSizeY));
+            
 
             graphics = panelCutTexture.CreateGraphics();
 
             graphics.DrawImage(drawImage, new Point(0, 0));
-
+            ReDrawRectangle(sender, e);
         }
 
 
@@ -140,7 +151,10 @@ namespace SBTK2
                     e.Y >= recPositionY && e.Y <= (recPositionY + cuttingRectangle.Height))
                 {
                     draggingRec = true;
-                    DoDragDrop(cutImage, DragDropEffects.Copy);
+                    if (cutImage != null)
+                    {
+                      DoDragDrop(cutImage, DragDropEffects.Copy);
+                    }
                 }
                 else
                 {
@@ -196,7 +210,10 @@ namespace SBTK2
 
         private void panelCutTexture_MouseMove(object sender, MouseEventArgs e)
         {
+          if (mouseDrawRec)
+          {
             DrawRectangle(e);
+          }
         }
 
         /// <summary>
@@ -209,8 +226,12 @@ namespace SBTK2
               mouseDrawRec = false;
               if (cuttingRectangle != null && selectedImage != null)
               {
-                  cutImage = null;
-                  cutImage = selectedImage.Clone(cuttingRectangle, PixelFormat.Format32bppArgb);
+                  //cutImage = null;
+                  //cutImage = selectedImage.Clone(cuttingRectangle, PixelFormat.Format32bppArgb);
+
+                  TextureRect nRect = new TextureRect(selectedImage, cuttingRectangle, new Point(0, 0));
+                  textureClips.Add(nRect);
+                  panelTextureCollector.Refresh();
               }
 
         }
@@ -268,10 +289,10 @@ namespace SBTK2
                 rectPos.X -= cutImage.Width / 2;
                 rectPos.Y -= cutImage.Height / 2;
 
-                Graphics g = Graphics.FromImage(canvas);
-                g.DrawImage(cutImage, rectPos);
-                panelTextureCollector.BackgroundImage = canvas;
-                panelTextureCollector.Refresh();
+                //Graphics g = Graphics.FromImage(canvas);
+                //g.DrawImage(cutImage, rectPos);
+                //panelTextureCollector.BackgroundImage = canvas;
+                //panelTextureCollector.Refresh();
             }
         }
 
@@ -293,6 +314,23 @@ namespace SBTK2
         private void panelTextureCollector_MouseEnter(object sender, EventArgs e)
         {
             panelTextureCollector.Focus();
+        }
+
+        private void panelTextureCollector_Paint(object sender, PaintEventArgs e)
+        {
+          Graphics graphics = panelTextureCollector.CreateGraphics();
+          foreach (TextureRect tr in textureClips)
+          {
+            graphics.DrawImage(
+              tr.SourceImage,
+              tr.Clip,
+              new Rectangle(
+                tr.Position,
+                new Size(tr.Clip.Width, tr.Clip.Height)
+              ),
+              GraphicsUnit.Pixel
+            );
+          }
         }
 
     }
