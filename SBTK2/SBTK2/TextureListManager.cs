@@ -243,10 +243,5 @@ namespace SBTK2
             AddImage(picture);
         }
 
-        /// <summary>
-        /// Timer will update 30 times every second
-        /// </summary>
-        
-
     }
 }

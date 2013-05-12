@@ -36,6 +36,8 @@ namespace SBTK2
         //timer for the Paint events
         Timer timer;
 
+        BufferedGraphicsContext myContext;
+
         public FormTextureAtlas()
         {
             InitializeComponent();
@@ -54,24 +56,27 @@ namespace SBTK2
             //draw image in panelCutTexture
             drawImage = new Bitmap(panelSizeX, panelSizeY);
             
-            panelCutTexture.Paint += new PaintEventHandler(panelCutTexture_Paint);
+            
         }
 
+        /// <summary>
+        /// Timer will update 60 times every second
+        /// </summary>
         public void TimerUpdate()
         {
             timer = new Timer();
 
             timer.Tick += new EventHandler(timer_Tick);
 
-
-            timer.Interval = (1000 / 30); // timer will tick 30 times every second
+            timer.Interval = (1000 / 60); // timer will tick 60 times every second
             timer.Enabled = true;
             timer.Start();
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            MessageBox.Show("kj");
+            panelCutTexture.Paint += new PaintEventHandler(panelCutTexture_Paint);
+            
         }
 
         private void btnAddImage_Click(object sender, EventArgs e)
@@ -130,17 +135,23 @@ namespace SBTK2
 
         private void panelCutTexture_Paint(object sender, PaintEventArgs e)
         {
+            myContext = new BufferedGraphicsContext();
+
             // casta from Image to canvas (bitmap)
             Graphics graphics = Graphics.FromImage((Image)drawImage);
-
             graphics = panelCutTexture.CreateGraphics();
-
             graphics.DrawImage(drawImage, new Point(0, 0));
+
+            panelCutTexture.Invalidate();
+
+            myContext.Dispose();
             
         }
 
         private void ReDrawRectangle(object sender, PaintEventArgs e)
         {
+            myContext = new BufferedGraphicsContext();
+
             // casta from Image to canvas (bitmap)
             Graphics graphicsCanvas = Graphics.FromImage((Image)canvas);
 
@@ -150,6 +161,7 @@ namespace SBTK2
             graphicsCanvas = panelTextureCollector.CreateGraphics();
             graphicsCanvas.DrawImage(canvas, new Point(0, 0));
 
+            myContext.Dispose();
         }
 
         /// <summary>
