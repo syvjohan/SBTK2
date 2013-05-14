@@ -29,6 +29,9 @@ namespace SBTK2
         private int panelSizeX = 1024;
         private int panelSizeY = 1024;
 
+        // Predefined rectangle
+        Rectangle predefinedRectangle = new Rectangle();
+
         List<TextureRect> textureClips;
 
         //timer for the Paint events
@@ -243,7 +246,7 @@ namespace SBTK2
         {
           if (mouseDrawRec == true)
           {
-            DrawRectangle(e);
+             DrawRectangle(e);
           }
         }
 
@@ -341,6 +344,9 @@ namespace SBTK2
             panelTextureCollector.Focus();
         }
 
+        /// <summary>
+        /// Text in the combobox (cmb) Get called by the FormTextureAtlas().
+        /// </summary>
         private void CmbText()
         {
             cmb.Items.Add("Add Rectangle size 16 * 16");
@@ -350,56 +356,74 @@ namespace SBTK2
             cmb.Items.Add("Add Rectangle size 256 * 256");
         }
 
+        /// <summary>
+        /// Predefined Rectangles in the panelCutTexture.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            mouseDrawRec = false;
             Pen pen = new Pen(Color.Black, 2);
-            Rectangle rectangle = new Rectangle(0, 0, 0, 0);
-
+            
             if (cmb.SelectedIndex == 0)
             {
-                rectangle.X = 10;
-                rectangle.Y = 10;
-                rectangle.Height = 16;
-                rectangle.Width = 16;
+                predefinedRectangle.X = 10;
+                predefinedRectangle.Y = 10;
+                predefinedRectangle.Height = 16;
+                predefinedRectangle.Width = 16;
             }
 
             if (cmb.SelectedIndex == 1)
             {
-                rectangle.X = 10;
-                rectangle.Y = 10;
-                rectangle.Height = 32;
-                rectangle.Width = 32;
+                predefinedRectangle.X = 10;
+                predefinedRectangle.Y = 10;
+                predefinedRectangle.Height = 32;
+                predefinedRectangle.Width = 32;
             }
 
             if (cmb.SelectedIndex == 2)
             {
-                rectangle.X = 10;
-                rectangle.Y = 10;
-                rectangle.Height = 64;
-                rectangle.Width = 64;
+                predefinedRectangle.X = 10;
+                predefinedRectangle.Y = 10;
+                predefinedRectangle.Height = 64;
+                predefinedRectangle.Width = 64;
             }
 
             if (cmb.SelectedIndex == 3)
             {
-                rectangle.X = 10;
-                rectangle.Y = 10;
-                rectangle.Height = 128;
-                rectangle.Width = 128;
+                predefinedRectangle.X = 10;
+                predefinedRectangle.Y = 10;
+                predefinedRectangle.Height = 128;
+                predefinedRectangle.Width = 128;
             }
 
             if (cmb.SelectedIndex == 4)
             {
-                rectangle.X = 10;
-                rectangle.Y = 10;
-                rectangle.Height = 256;
-                rectangle.Width = 256;
+                predefinedRectangle.X = 10;
+                predefinedRectangle.Y = 10;
+                predefinedRectangle.Height = 256;
+                predefinedRectangle.Width = 256;
             }
 
             panelCutTexture.Refresh();
             Panelgraphics = panelCutTexture.CreateGraphics();
-            Panelgraphics.DrawRectangle(pen, rectangle);
+            Panelgraphics.DrawRectangle(pen, predefinedRectangle);
+
         }
 
+        private void DraggingRec(MouseEventArgs e)
+        {
+            if ((e.Button == MouseButtons.Left) && (predefinedRectangle.X == MousePosition.X) && (predefinedRectangle.Y == MousePosition.Y))
+            {
+                MousePosition.Equals(predefinedRectangle);
+            }
+        }
     }
 }
+
+// Combobox show the title but no editing for user.
+// Make the images stopp flashing and make them update correctly after the timer_tick.
+// Reset so it´s not possible to draw rectangle in empty panels.
+// Delete button, one key event in the form for everything or many key event for deleting objects ?
+// Make it possible to dragging Rectangle with the DraggingRec method if it´s possible with only one method.
+
