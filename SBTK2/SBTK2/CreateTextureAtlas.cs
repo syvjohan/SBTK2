@@ -19,17 +19,15 @@ namespace SBTK2
         private int recPositionX;
         private int recPositionY;
         private bool mouseDrawRec = false;
-        private bool draggingRec = false;
+        private bool draggingRec = false; // make it not possible to draw a rec over a empty panel.
         private Graphics Panelgraphics { get; set; }
         private Bitmap selectedImage;
-        private Bitmap cutImage;
         private Bitmap drawImage;
 
         // ReDraw the rectangle
         private Bitmap canvas;
         private int panelSizeX = 1024;
         private int panelSizeY = 1024;
-        Point rectPos = new Point(0, 0);
 
         List<TextureRect> textureClips;
 
@@ -43,8 +41,11 @@ namespace SBTK2
             InitializeComponent();
             InitializeLocalComponents();
             TimerUpdate();
+            CmbText();
 
             textureClips = new List<TextureRect>();
+
+            
         }
 
         private void InitializeLocalComponents()
@@ -56,7 +57,8 @@ namespace SBTK2
             //draw image in panelCutTexture
             drawImage = new Bitmap(panelSizeX, panelSizeY);
             
-            
+            panelCutTexture.Paint += new PaintEventHandler(panelCutTexture_Paint);
+            panelTextureCollector.Click += new EventHandler(panelTextureCollector_Click);
         }
 
         /// <summary>
@@ -75,7 +77,6 @@ namespace SBTK2
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            panelCutTexture.Paint += new PaintEventHandler(panelCutTexture_Paint);
             
         }
 
@@ -142,8 +143,8 @@ namespace SBTK2
             graphics = panelCutTexture.CreateGraphics();
             graphics.DrawImage(drawImage, new Point(0, 0));
 
-            panelCutTexture.Invalidate();
-
+            //panelCutTexture.Invalidate();
+            //Math.Pow(2,10) = 1024
             myContext.Dispose();
             
         }
@@ -177,9 +178,9 @@ namespace SBTK2
                     e.Y >= recPositionY && e.Y <= (recPositionY + cuttingRectangle.Height))
                 {
                     draggingRec = true;
-                    if (cutImage != null)
+                    if (drawImage != null)
                     {
-                        DoDragDrop(cutImage, DragDropEffects.Copy);
+                        DoDragDrop(drawImage, DragDropEffects.Copy);
                     }
                 }
                 else
@@ -262,23 +263,6 @@ namespace SBTK2
               }
         }
 
-        private void panelTextureCollector_Paint(object sender, PaintEventArgs e)
-        {
-            Graphics graphics = panelTextureCollector.CreateGraphics();
-            foreach (TextureRect tr in textureClips)
-            {
-                graphics.DrawImage(
-                  tr.SourceImage,
-                  tr.Clip,
-                  new Rectangle(
-                    tr.Position,
-                    new Size(tr.Clip.Width, tr.Clip.Height)
-                  ),
-                  GraphicsUnit.Pixel
-                );
-            }
-        }
-
         /// <summary>
         ///  Enter and call the DragEnter method
         /// </summary>
@@ -312,12 +296,28 @@ namespace SBTK2
 
         private void panelTextureCollector_Click(object sender, EventArgs e)
         {
-            if (cutImage != null)
+
+            //    rectPos = Cursor.Position;
+            //    rectPos = panelTextureCollector.PointToClient(rectPos);
+
+            //    rectPos.X -= drawImage.Width / 2;
+            //    rectPos.Y -= drawImage.Height / 2;
+            if (drawImage != null)
             {
-                rectPos = Cursor.Position;
-                rectPos = panelTextureCollector.PointToClient(rectPos);
-                rectPos.X -= cutImage.Width / 2;
-                rectPos.Y -= cutImage.Height / 2;
+                Graphics graphics = panelTextureCollector.CreateGraphics();
+                foreach (TextureRect tr in textureClips)
+                {
+                   
+                    graphics.DrawImage(
+                      tr.SourceImage,
+                      tr.Clip,
+                      new Rectangle(
+                        tr.Position,
+                        new Size(tr.Clip.Width, tr.Clip.Height)
+                      ),
+                      GraphicsUnit.Pixel
+                    );
+                }
             }
         }
 
@@ -339,6 +339,66 @@ namespace SBTK2
         private void panelTextureCollector_MouseEnter(object sender, EventArgs e)
         {
             panelTextureCollector.Focus();
+        }
+
+        private void CmbText()
+        {
+            cmb.Items.Add("Add Rectangle size 16 * 16");
+            cmb.Items.Add("Add Rectangle size 32 * 32");
+            cmb.Items.Add("Add Rectangle size 64 * 64");
+            cmb.Items.Add("Add Rectangle size 128 * 128");
+            cmb.Items.Add("Add Rectangle size 256 * 256");
+        }
+
+        private void cmb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mouseDrawRec = false;
+            Pen pen = new Pen(Color.Black, 2);
+            Rectangle rectangle = new Rectangle(0, 0, 0, 0);
+
+            if (cmb.SelectedIndex == 0)
+            {
+                rectangle.X = 10;
+                rectangle.Y = 10;
+                rectangle.Height = 16;
+                rectangle.Width = 16;
+            }
+
+            if (cmb.SelectedIndex == 1)
+            {
+                rectangle.X = 10;
+                rectangle.Y = 10;
+                rectangle.Height = 32;
+                rectangle.Width = 32;
+            }
+
+            if (cmb.SelectedIndex == 2)
+            {
+                rectangle.X = 10;
+                rectangle.Y = 10;
+                rectangle.Height = 64;
+                rectangle.Width = 64;
+            }
+
+            if (cmb.SelectedIndex == 3)
+            {
+                rectangle.X = 10;
+                rectangle.Y = 10;
+                rectangle.Height = 128;
+                rectangle.Width = 128;
+            }
+
+            if (cmb.SelectedIndex == 4)
+            {
+                rectangle.X = 10;
+                rectangle.Y = 10;
+                rectangle.Height = 256;
+                rectangle.Width = 256;
+            }
+
+            panelCutTexture.Refresh();
+            Panelgraphics = panelCutTexture.CreateGraphics();
+            Panelgraphics.DrawRectangle(pen, rectangle);
         }
 
     }
