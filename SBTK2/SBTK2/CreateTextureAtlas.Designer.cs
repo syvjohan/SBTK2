@@ -33,7 +33,7 @@
             this.listViewAddedTextures = new System.Windows.Forms.ListView();
             this.loadedImages = new System.Windows.Forms.ImageList(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.panelTextureCollector = new System.Windows.Forms.Panel();
+            this.panelTextureCollector = new SBTK2.CustomPanel();
             this.cmb = new System.Windows.Forms.ComboBox();
             this.panelCutTexture = new SBTK2.CustomPanel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();

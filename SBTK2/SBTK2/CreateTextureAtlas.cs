@@ -204,25 +204,23 @@ namespace SBTK2
         {
             if (e.Button == MouseButtons.Left && mouseDrawRec == true)
             {
-                Image image = null;
-                image = panelCutTexture.BackgroundImage;
 
-                if (image != null)
+                if (panelCutTexture.BackgroundImage != null)
                 {
                     this.Refresh();
 
                     int width = e.X - recPositionX;
                     int height = e.Y - recPositionY;
 
-                    if (width <= 1)
-                    {
-                        width = 1;
-                    }
+                    //if (width <= 1)
+                    //{
+                    //    width = 1;
+                    //}
 
-                    if (height <= 1)
-                    {
-                        height = 1;
-                    }
+                    //if (height <= 1)
+                    //{
+                    //    height = 1;
+                    //}
 
                     cuttingRectangle = new Rectangle(recPositionX,
                         recPositionY,
@@ -233,6 +231,7 @@ namespace SBTK2
                     Panelgraphics.DrawRectangle(pen, cuttingRectangle);
                 }
             }
+            
         }
 
         private void panelCutTexture_MouseMove(object sender, MouseEventArgs e)
@@ -240,6 +239,7 @@ namespace SBTK2
             if (mouseDrawRec == true)
             {
                 DrawRectangle(e);
+
             }
         }
 
@@ -297,6 +297,7 @@ namespace SBTK2
 
             //    rectPos.X -= drawImage.Width / 2;
             //    rectPos.Y -= drawImage.Height / 2;
+            
             if (drawImage != null)
             {
                 Graphics graphics = panelTextureCollector.CreateGraphics();
@@ -304,7 +305,7 @@ namespace SBTK2
                 {
 
                     graphics.DrawImage(
-                      tr.SourceImage,
+                      tr.SourceImage,//.Crop(tr.Clip.Top,tr.Clip.Left,tr.Clip.Width,tr.Clip.Height),
                       tr.Clip,
                       new Rectangle(
                         tr.Position,
