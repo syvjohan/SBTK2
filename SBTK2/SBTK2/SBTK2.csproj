@@ -52,6 +52,10 @@
     <Compile Include="CreateTextureAtlas.Designer.cs">
       <DependentUpon>CreateTextureAtlas.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomRectangleRule.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="TextureListManager.cs" />
     <Compile Include="Program.cs" />

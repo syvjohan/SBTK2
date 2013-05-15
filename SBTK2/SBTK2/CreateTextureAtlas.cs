@@ -23,6 +23,7 @@ namespace SBTK2
         private Graphics Panelgraphics { get; set; }
         private Bitmap selectedImage;
         private Bitmap drawImage;
+        Pen pen = new Pen(Color.Black, 2);
 
         // ReDraw the rectangle
         private Bitmap canvas;
@@ -30,25 +31,21 @@ namespace SBTK2
         private int panelSizeY = 1024;
 
         // Predefined rectangle
-        Rectangle predefinedRectangle = new Rectangle();
+        Rectangle predefinedRectangle;
 
         List<TextureRect> textureClips;
 
         //timer for the Paint events
         Timer timer;
 
-        BufferedGraphicsContext myContext;
-
         public FormTextureAtlas()
         {
             InitializeComponent();
             InitializeLocalComponents();
             TimerUpdate();
-            CmbText();
+            FillCmb();
 
             textureClips = new List<TextureRect>();
-
-            
         }
 
         private void InitializeLocalComponents()
@@ -59,9 +56,16 @@ namespace SBTK2
 
             //draw image in panelCutTexture
             drawImage = new Bitmap(panelSizeX, panelSizeY);
-            
-            panelCutTexture.Paint += new PaintEventHandler(panelCutTexture_Paint);
+
+            //panelCutTexture.Paint += new PaintEventHandler(panelCutTexture_Paint);
             panelTextureCollector.Click += new EventHandler(panelTextureCollector_Click);
+
+
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+            this.UpdateStyles();
+
+  
+
         }
 
         /// <summary>
@@ -80,14 +84,14 @@ namespace SBTK2
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnAddImage_Click(object sender, EventArgs e)
         {
-             textureListManager.OpenImage();
-             LoadImages();
-            
+            textureListManager.OpenImage();
+            LoadImages();
+
         }
 
         /// <summary>
@@ -98,7 +102,7 @@ namespace SBTK2
             //Clears the list of old data
             listViewAddedTextures.Items.Clear();
             loadedImages.Images.Clear();
-            
+
             for (int i = 0; i < textureListManager.NrOfImages; i++)
             {
                 //Adds the image from the textureListManager at the specific index to the imageList
@@ -139,22 +143,18 @@ namespace SBTK2
 
         private void panelCutTexture_Paint(object sender, PaintEventArgs e)
         {
-            myContext = new BufferedGraphicsContext();
 
             // casta from Image to canvas (bitmap)
-            Graphics graphics = Graphics.FromImage((Image)drawImage);
+            Graphics graphics; //= Graphics.FromImage((Image)drawImage);
             graphics = panelCutTexture.CreateGraphics();
             graphics.DrawImage(drawImage, new Point(0, 0));
-
-            //panelCutTexture.Invalidate();
-            //Math.Pow(2,10) = 1024
-            myContext.Dispose();
             
+           
+
         }
 
         private void ReDrawRectangle(object sender, PaintEventArgs e)
         {
-            myContext = new BufferedGraphicsContext();
 
             // casta from Image to canvas (bitmap)
             Graphics graphicsCanvas = Graphics.FromImage((Image)canvas);
@@ -164,8 +164,6 @@ namespace SBTK2
 
             graphicsCanvas = panelTextureCollector.CreateGraphics();
             graphicsCanvas.DrawImage(canvas, new Point(0, 0));
-
-            myContext.Dispose();
         }
 
         /// <summary>
@@ -213,15 +211,14 @@ namespace SBTK2
                 Image image = null;
                 image = panelCutTexture.BackgroundImage;
 
-                if(image != null)
+                if (image != null)
                 {
                     this.Refresh();
 
-                    Pen pen = new Pen(Color.Black, 2);
                     int width = e.X - recPositionX;
                     int height = e.Y - recPositionY;
 
-                    if( width <= 1)
+                    if (width <= 1)
                     {
                         width = 1;
                     }
@@ -244,10 +241,10 @@ namespace SBTK2
 
         private void panelCutTexture_MouseMove(object sender, MouseEventArgs e)
         {
-          if (mouseDrawRec == true)
-          {
-             DrawRectangle(e);
-          }
+            if (mouseDrawRec == true)
+            {
+                DrawRectangle(e);
+            }
         }
 
         /// <summary>
@@ -257,13 +254,13 @@ namespace SBTK2
         /// <param name="e"></param>
         private void panelCutTexture_MouseUp(object sender, MouseEventArgs e)
         {
-              mouseDrawRec = false;
-              if (cuttingRectangle != null && selectedImage != null)
-              {
-                  TextureRect nRect = new TextureRect(selectedImage, cuttingRectangle, new Point(0, 0));
-                  textureClips.Add(nRect);
-                  panelTextureCollector.Refresh();
-              }
+            mouseDrawRec = false;
+            if (cuttingRectangle != null && selectedImage != null)
+            {
+                TextureRect nRect = new TextureRect(selectedImage, cuttingRectangle, new Point(0, 0));
+                textureClips.Add(nRect);
+                panelTextureCollector.Refresh();
+            }
         }
 
         /// <summary>
@@ -310,7 +307,7 @@ namespace SBTK2
                 Graphics graphics = panelTextureCollector.CreateGraphics();
                 foreach (TextureRect tr in textureClips)
                 {
-                   
+
                     graphics.DrawImage(
                       tr.SourceImage,
                       tr.Clip,
@@ -345,15 +342,17 @@ namespace SBTK2
         }
 
         /// <summary>
-        /// Text in the combobox (cmb) Get called by the FormTextureAtlas().
+        /// Text in the combobox and the rectangles (cmb).
         /// </summary>
-        private void CmbText()
+        private void FillCmb()
         {
-            cmb.Items.Add("Add Rectangle size 16 * 16");
-            cmb.Items.Add("Add Rectangle size 32 * 32");
-            cmb.Items.Add("Add Rectangle size 64 * 64");
-            cmb.Items.Add("Add Rectangle size 128 * 128");
-            cmb.Items.Add("Add Rectangle size 256 * 256");
+            cmb.Items.Add(CustomRectangleRule.rTitle);
+            cmb.Items.Add(CustomRectangleRule.r16);
+            cmb.Items.Add(CustomRectangleRule.r32);
+            cmb.Items.Add(CustomRectangleRule.r64);
+            cmb.Items.Add(CustomRectangleRule.r128);
+            cmb.Items.Add(CustomRectangleRule.r256);
+            cmb.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -363,61 +362,22 @@ namespace SBTK2
         /// <param name="e"></param>
         private void cmb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Pen pen = new Pen(Color.Black, 2);
-            
-            if (cmb.SelectedIndex == 0)
-            {
-                predefinedRectangle.X = 10;
-                predefinedRectangle.Y = 10;
-                predefinedRectangle.Height = 16;
-                predefinedRectangle.Width = 16;
-            }
+            predefinedRectangle = ((CustomRectangleRule)cmb.SelectedItem).rec;
 
-            if (cmb.SelectedIndex == 1)
-            {
-                predefinedRectangle.X = 10;
-                predefinedRectangle.Y = 10;
-                predefinedRectangle.Height = 32;
-                predefinedRectangle.Width = 32;
-            }
 
-            if (cmb.SelectedIndex == 2)
-            {
-                predefinedRectangle.X = 10;
-                predefinedRectangle.Y = 10;
-                predefinedRectangle.Height = 64;
-                predefinedRectangle.Width = 64;
-            }
-
-            if (cmb.SelectedIndex == 3)
-            {
-                predefinedRectangle.X = 10;
-                predefinedRectangle.Y = 10;
-                predefinedRectangle.Height = 128;
-                predefinedRectangle.Width = 128;
-            }
-
-            if (cmb.SelectedIndex == 4)
-            {
-                predefinedRectangle.X = 10;
-                predefinedRectangle.Y = 10;
-                predefinedRectangle.Height = 256;
-                predefinedRectangle.Width = 256;
-            }
-
-            panelCutTexture.Refresh();
             Panelgraphics = panelCutTexture.CreateGraphics();
             Panelgraphics.DrawRectangle(pen, predefinedRectangle);
+            cmb.Items.Remove();
 
         }
+        //private void DraggingRec(MouseEventArgs e)
+        //{
+        //    if ((e.Button == MouseButtons.Left) && (predefinedRectangle.X == MousePosition.X) && (predefinedRectangle.Y == MousePosition.Y))
+        //    {
+        //        MousePosition.Equals(predefinedRectangle);
+        //    }
+        //}
 
-        private void DraggingRec(MouseEventArgs e)
-        {
-            if ((e.Button == MouseButtons.Left) && (predefinedRectangle.X == MousePosition.X) && (predefinedRectangle.Y == MousePosition.Y))
-            {
-                MousePosition.Equals(predefinedRectangle);
-            }
-        }
     }
 }
 
