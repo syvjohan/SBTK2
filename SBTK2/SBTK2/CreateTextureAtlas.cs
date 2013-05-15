@@ -64,8 +64,6 @@ namespace SBTK2
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             this.UpdateStyles();
 
-  
-
         }
 
         /// <summary>
@@ -148,8 +146,6 @@ namespace SBTK2
             Graphics graphics; //= Graphics.FromImage((Image)drawImage);
             graphics = panelCutTexture.CreateGraphics();
             graphics.DrawImage(drawImage, new Point(0, 0));
-            
-           
 
         }
 
@@ -296,7 +292,6 @@ namespace SBTK2
 
         private void panelTextureCollector_Click(object sender, EventArgs e)
         {
-
             //    rectPos = Cursor.Position;
             //    rectPos = panelTextureCollector.PointToClient(rectPos);
 
@@ -362,12 +357,14 @@ namespace SBTK2
         /// <param name="e"></param>
         private void cmb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            predefinedRectangle = ((CustomRectangleRule)cmb.SelectedItem).rec;
+            panelCutTexture.Clear();
 
+            predefinedRectangle = ((CustomRectangleRule)cmb.SelectedItem).rec;
 
             Panelgraphics = panelCutTexture.CreateGraphics();
             Panelgraphics.DrawRectangle(pen, predefinedRectangle);
-            cmb.Items.Remove();
+
+           
 
         }
         //private void DraggingRec(MouseEventArgs e)
