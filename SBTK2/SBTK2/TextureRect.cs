@@ -6,6 +6,7 @@ using System.Drawing;
 
 namespace SBTK2
 {
+    // For the Rectangle, Image and Point in the panelTextureCollector.
   class TextureRect
   {
     public Image SourceImage
@@ -37,7 +38,7 @@ namespace SBTK2
       this.clip = clip;
       this.position = position;
     }
-
+     
 
   }
 }

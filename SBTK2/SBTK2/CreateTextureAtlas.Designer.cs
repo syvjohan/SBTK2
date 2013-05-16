@@ -33,9 +33,11 @@
             this.listViewAddedTextures = new System.Windows.Forms.ListView();
             this.loadedImages = new System.Windows.Forms.ImageList(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.panelTextureCollector = new SBTK2.CustomPanel();
             this.cmb = new System.Windows.Forms.ComboBox();
+            this.btnDeleteObject = new System.Windows.Forms.Button();
+            this.btnCleanPanel = new System.Windows.Forms.Button();
             this.panelCutTexture = new SBTK2.CustomPanel();
+            this.panelTextureCollector = new SBTK2.CustomPanel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -88,22 +90,6 @@
             this.splitContainer1.SplitterDistance = 258;
             this.splitContainer1.TabIndex = 3;
             // 
-            // panelTextureCollector
-            // 
-            this.panelTextureCollector.AutoScroll = true;
-            this.panelTextureCollector.AutoScrollMinSize = new System.Drawing.Size(1024, 1024);
-            this.panelTextureCollector.AutoSize = true;
-            this.panelTextureCollector.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelTextureCollector.BackColor = System.Drawing.Color.White;
-            this.panelTextureCollector.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panelTextureCollector.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTextureCollector.Location = new System.Drawing.Point(0, 0);
-            this.panelTextureCollector.Name = "panelTextureCollector";
-            this.panelTextureCollector.Size = new System.Drawing.Size(649, 526);
-            this.panelTextureCollector.TabIndex = 0;
-            this.panelTextureCollector.Click += new System.EventHandler(this.panelTextureCollector_Click);
-            this.panelTextureCollector.MouseEnter += new System.EventHandler(this.panelTextureCollector_MouseEnter);
-            // 
             // cmb
             // 
             this.cmb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -114,6 +100,25 @@
             this.cmb.Size = new System.Drawing.Size(258, 23);
             this.cmb.TabIndex = 4;
             this.cmb.SelectedIndexChanged += new System.EventHandler(this.cmb_SelectedIndexChanged);
+            // 
+            // btnDeleteObject
+            // 
+            this.btnDeleteObject.Location = new System.Drawing.Point(846, 12);
+            this.btnDeleteObject.Name = "btnDeleteObject";
+            this.btnDeleteObject.Size = new System.Drawing.Size(92, 43);
+            this.btnDeleteObject.TabIndex = 5;
+            this.btnDeleteObject.Text = "Delete Object";
+            this.btnDeleteObject.UseVisualStyleBackColor = true;
+            // 
+            // btnCleanPanel
+            // 
+            this.btnCleanPanel.Location = new System.Drawing.Point(980, 12);
+            this.btnCleanPanel.Name = "btnCleanPanel";
+            this.btnCleanPanel.Size = new System.Drawing.Size(100, 43);
+            this.btnCleanPanel.TabIndex = 6;
+            this.btnCleanPanel.Text = "Clean the Panel";
+            this.btnCleanPanel.UseVisualStyleBackColor = true;
+            this.btnCleanPanel.Click += new System.EventHandler(this.btnCleanPanel_Click);
             // 
             // panelCutTexture
             // 
@@ -133,6 +138,22 @@
             this.panelCutTexture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelCutTexture_MouseMove);
             this.panelCutTexture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelCutTexture_MouseUp);
             // 
+            // panelTextureCollector
+            // 
+            this.panelTextureCollector.AutoScroll = true;
+            this.panelTextureCollector.AutoScrollMinSize = new System.Drawing.Size(1024, 1024);
+            this.panelTextureCollector.AutoSize = true;
+            this.panelTextureCollector.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelTextureCollector.BackColor = System.Drawing.Color.White;
+            this.panelTextureCollector.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panelTextureCollector.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTextureCollector.Location = new System.Drawing.Point(0, 0);
+            this.panelTextureCollector.Name = "panelTextureCollector";
+            this.panelTextureCollector.Size = new System.Drawing.Size(649, 526);
+            this.panelTextureCollector.TabIndex = 0;
+            this.panelTextureCollector.Click += new System.EventHandler(this.panelTextureCollector_Click);
+            this.panelTextureCollector.MouseEnter += new System.EventHandler(this.panelTextureCollector_MouseEnter);
+            // 
             // FormTextureAtlas
             // 
             this.AllowDrop = true;
@@ -141,6 +162,8 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1180, 618);
+            this.Controls.Add(this.btnCleanPanel);
+            this.Controls.Add(this.btnDeleteObject);
             this.Controls.Add(this.cmb);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnAddImage);
@@ -163,9 +186,11 @@
         private System.Windows.Forms.ListView listViewAddedTextures;
         private System.Windows.Forms.ImageList loadedImages;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Panel panelTextureCollector;
         private System.Windows.Forms.ComboBox cmb;
         private CustomPanel panelCutTexture;
+        private CustomPanel panelTextureCollector;
+        private System.Windows.Forms.Button btnDeleteObject;
+        private System.Windows.Forms.Button btnCleanPanel;
     }
 }
 
