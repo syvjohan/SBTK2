@@ -169,29 +169,37 @@ namespace SBTK2
         /// <param name="e"></param>
         private void panelCutTexture_MouseDown(object sender, MouseEventArgs e)
         {
-            if (cuttingRectangle != null && drawImage != null)
+            if (predefinedRectangle != ((CustomRectangleRule)cmb.SelectedItem).rec)
             {
-                if (e.X >= recPositionX && e.X <= (recPositionX + cuttingRectangle.Width) &&
-                    e.Y >= recPositionY && e.Y <= (recPositionY + cuttingRectangle.Height))
+                if (cuttingRectangle != null && drawImage != null)
                 {
-                    draggingRec = true;
-                    if (drawImage != null)
+                    if (e.X >= recPositionX && e.X <= (recPositionX + cuttingRectangle.Width) &&
+                        e.Y >= recPositionY && e.Y <= (recPositionY + cuttingRectangle.Height))
                     {
-                        DoDragDrop(drawImage, DragDropEffects.Copy);
+                        draggingRec = true;
+                        if (drawImage != null)
+                        {
+                            DoDragDrop(drawImage, DragDropEffects.Copy);
+                        }
+                    }
+                    else
+                    {
+                        mouseDrawRec = true;
+                        recPositionX = e.X;
+                        recPositionY = e.Y;
+                        Update();
                     }
                 }
                 else
                 {
-                    mouseDrawRec = true;
-                    recPositionX = e.X;
-                    recPositionY = e.Y;
-                    Update();
+                    mouseDrawRec = false;
                 }
             }
             else
             {
-                mouseDrawRec = false;
+                MessageBox.Show("You cannot draw more than one rectangle at the time.\nTo delete existing rectangle select existing rectangle and press delete");
             }
+
         }
 
         /// <summary>
@@ -231,7 +239,7 @@ namespace SBTK2
                     Panelgraphics.DrawRectangle(pen, cuttingRectangle);
                 }
             }
-            
+
         }
 
         private void panelCutTexture_MouseMove(object sender, MouseEventArgs e)
@@ -297,7 +305,7 @@ namespace SBTK2
 
             //    rectPos.X -= drawImage.Width / 2;
             //    rectPos.Y -= drawImage.Height / 2;
-            
+
             if (drawImage != null)
             {
                 Graphics graphics = panelTextureCollector.CreateGraphics();
@@ -348,7 +356,7 @@ namespace SBTK2
             cmb.Items.Add(CustomRectangleRule.r64);
             cmb.Items.Add(CustomRectangleRule.r128);
             cmb.Items.Add(CustomRectangleRule.r256);
-            cmb.SelectedIndex = 0;
+            cmb.SelectedIndex = 0; // sets the first item in the list ass start choice (Title cmb).
         }
 
         /// <summary>
@@ -365,7 +373,7 @@ namespace SBTK2
             Panelgraphics = panelCutTexture.CreateGraphics();
             Panelgraphics.DrawRectangle(pen, predefinedRectangle);
 
-           
+
 
         }
         //private void DraggingRec(MouseEventArgs e)
@@ -379,8 +387,6 @@ namespace SBTK2
     }
 }
 
-// Combobox show the title but no editing for user.
-// Make the images stopp flashing and make them update correctly after the timer_tick.
 // Reset so it´s not possible to draw rectangle in empty panels.
 // Delete button, one key event in the form for everything or many key event for deleting objects ?
 // Make it possible to dragging Rectangle with the DraggingRec method if it´s possible with only one method.
