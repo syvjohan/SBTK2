@@ -9,7 +9,7 @@ namespace SBTK2
     // For the Rectangle, Image and Point in the panelTextureCollector.
   class TextureRect
   {
-    public Image SourceImage
+    public Bitmap SourceImage
     {
       get { return sourceImage; }
       set { sourceImage = value; }
@@ -28,11 +28,11 @@ namespace SBTK2
     }
 
     // The image the rectangle should clip from.
-    Image sourceImage;
+    Bitmap sourceImage;
     Point position;
     Rectangle clip;
 
-    public TextureRect(Image source, Rectangle clip, Point position)
+    public TextureRect(Bitmap source, Rectangle clip, Point position)
     {
       sourceImage = source;
       this.clip = clip;
