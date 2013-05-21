@@ -33,12 +33,12 @@
             this.listViewAddedTextures = new System.Windows.Forms.ListView();
             this.loadedImages = new System.Windows.Forms.ImageList(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panelCutTexture = new SBTK2.CustomPanel();
+            this.panelTextureCollector = new SBTK2.CustomPanel();
             this.cmb = new System.Windows.Forms.ComboBox();
             this.btnDeleteObject = new System.Windows.Forms.Button();
             this.btnCleanPanel = new System.Windows.Forms.Button();
             this.btnDeleteRectangels = new System.Windows.Forms.Button();
-            this.panelCutTexture = new SBTK2.CustomPanel();
-            this.panelTextureCollector = new SBTK2.CustomPanel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -91,46 +91,6 @@
             this.splitContainer1.SplitterDistance = 258;
             this.splitContainer1.TabIndex = 3;
             // 
-            // cmb
-            // 
-            this.cmb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmb.FormattingEnabled = true;
-            this.cmb.Location = new System.Drawing.Point(230, 41);
-            this.cmb.Name = "cmb";
-            this.cmb.Size = new System.Drawing.Size(258, 23);
-            this.cmb.TabIndex = 4;
-            this.cmb.SelectedIndexChanged += new System.EventHandler(this.cmb_SelectedIndexChanged);
-            // 
-            // btnDeleteObject
-            // 
-            this.btnDeleteObject.Location = new System.Drawing.Point(846, 12);
-            this.btnDeleteObject.Name = "btnDeleteObject";
-            this.btnDeleteObject.Size = new System.Drawing.Size(92, 43);
-            this.btnDeleteObject.TabIndex = 5;
-            this.btnDeleteObject.Text = "Delete Object";
-            this.btnDeleteObject.UseVisualStyleBackColor = true;
-            // 
-            // btnCleanPanel
-            // 
-            this.btnCleanPanel.Location = new System.Drawing.Point(980, 12);
-            this.btnCleanPanel.Name = "btnCleanPanel";
-            this.btnCleanPanel.Size = new System.Drawing.Size(100, 43);
-            this.btnCleanPanel.TabIndex = 6;
-            this.btnCleanPanel.Text = "Clean the Panel";
-            this.btnCleanPanel.UseVisualStyleBackColor = true;
-            this.btnCleanPanel.Click += new System.EventHandler(this.btnCleanPanel_Click);
-            // 
-            // btnDeleteRectangels
-            // 
-            this.btnDeleteRectangels.Location = new System.Drawing.Point(230, 12);
-            this.btnDeleteRectangels.Name = "btnDeleteRectangels";
-            this.btnDeleteRectangels.Size = new System.Drawing.Size(258, 23);
-            this.btnDeleteRectangels.TabIndex = 7;
-            this.btnDeleteRectangels.Text = "Delete Rectangles";
-            this.btnDeleteRectangels.UseVisualStyleBackColor = true;
-            this.btnDeleteRectangels.Click += new System.EventHandler(this.btnDeleteRectangels_Click);
-            // 
             // panelCutTexture
             // 
             this.panelCutTexture.AutoScroll = true;
@@ -164,6 +124,47 @@
             this.panelTextureCollector.TabIndex = 0;
             this.panelTextureCollector.Click += new System.EventHandler(this.panelTextureCollector_Click);
             this.panelTextureCollector.MouseEnter += new System.EventHandler(this.panelTextureCollector_MouseEnter);
+            // 
+            // cmb
+            // 
+            this.cmb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmb.FormattingEnabled = true;
+            this.cmb.Location = new System.Drawing.Point(230, 41);
+            this.cmb.Name = "cmb";
+            this.cmb.Size = new System.Drawing.Size(258, 23);
+            this.cmb.TabIndex = 4;
+            this.cmb.SelectedIndexChanged += new System.EventHandler(this.cmb_SelectedIndexChanged);
+            // 
+            // btnDeleteObject
+            // 
+            this.btnDeleteObject.Location = new System.Drawing.Point(846, 12);
+            this.btnDeleteObject.Name = "btnDeleteObject";
+            this.btnDeleteObject.Size = new System.Drawing.Size(92, 43);
+            this.btnDeleteObject.TabIndex = 5;
+            this.btnDeleteObject.Text = "Delete Object";
+            this.btnDeleteObject.UseVisualStyleBackColor = true;
+            this.btnDeleteObject.Click += new System.EventHandler(this.btnDeleteObject_Click);
+            // 
+            // btnCleanPanel
+            // 
+            this.btnCleanPanel.Location = new System.Drawing.Point(980, 12);
+            this.btnCleanPanel.Name = "btnCleanPanel";
+            this.btnCleanPanel.Size = new System.Drawing.Size(100, 43);
+            this.btnCleanPanel.TabIndex = 6;
+            this.btnCleanPanel.Text = "Clean the Panel";
+            this.btnCleanPanel.UseVisualStyleBackColor = true;
+            this.btnCleanPanel.Click += new System.EventHandler(this.btnCleanPanel_Click);
+            // 
+            // btnDeleteRectangels
+            // 
+            this.btnDeleteRectangels.Location = new System.Drawing.Point(230, 12);
+            this.btnDeleteRectangels.Name = "btnDeleteRectangels";
+            this.btnDeleteRectangels.Size = new System.Drawing.Size(258, 23);
+            this.btnDeleteRectangels.TabIndex = 7;
+            this.btnDeleteRectangels.Text = "Delete Rectangles";
+            this.btnDeleteRectangels.UseVisualStyleBackColor = true;
+            this.btnDeleteRectangels.Click += new System.EventHandler(this.btnDeleteRectangels_Click);
             // 
             // FormTextureAtlas
             // 
