@@ -20,12 +20,13 @@ namespace SBTK2
         private Rectangle cuttingRectangle;
         private int recPositionX;
         private int recPositionY;
-        private bool mouseDrawRec = false;// Flagg for controlling the dragging in the panels
-        private bool draggingRec = false;// Flagg for controlling the dragging in the panels 
+        private bool mouseDrawRec = false;// Flagg for controlling the dragging in the panels.
+        private bool draggingRec = false;// Flagg for controlling the dragging in the panels.
         private Graphics Panelgraphics { get; set; }
         private Bitmap selectedImage;
         private Bitmap drawImage;
-        Pen pen = new Pen(Color.Black, 2);
+        Pen pen = new Pen(Color.Black, 2); // used for drawing rectangle.
+        Brush brush = new SolidBrush(Color.Transparent); // used for filling rectangle.
 
         // ReDraw the rectangle
         private Bitmap canvas;
@@ -48,7 +49,6 @@ namespace SBTK2
             InitializeComponent();
             InitializeLocalComponents();
             FillCmb();
-
         }
 
         private void InitializeLocalComponents()
@@ -114,7 +114,6 @@ namespace SBTK2
                 drawImage = new Bitmap(panelSizeX, panelSizeY);
 
                 Panelgraphics = Graphics.FromImage(drawImage);
-                Brush brush = new SolidBrush(Color.White);
                 Panelgraphics.FillRectangle(brush, new Rectangle(0, 0, drawImage.Width, drawImage.Height));
 
                 Panelgraphics.DrawImage(textureListManager.GetImageAtIndex(selectedImageIndex), new Point(0, 0));
@@ -147,11 +146,9 @@ namespace SBTK2
         /// <param name="e"></param>
         private void ReDrawRectangle(object sender, PaintEventArgs e)
         {
-
             // casta from Image to canvas (bitmap)
             Panelgraphics = Graphics.FromImage((Image)canvas);
 
-            Brush brush = new SolidBrush(Color.Transparent);
             Panelgraphics.FillRectangle(brush, new Rectangle(0, 0, panelSizeX, panelSizeY));
 
             Panelgraphics = panelTextureCollector.CreateGraphics();
@@ -225,11 +222,11 @@ namespace SBTK2
             {
                 MovingRec(e);
             }
-            //else
-            //{
-            //    Panelgraphics.Dispose();
-            //    DrawRectangle(e);
-            //}
+            else
+            {
+                Panelgraphics.Dispose();
+                DrawRectangle(e);
+            }
         }
 
         /// <summary>
@@ -242,7 +239,6 @@ namespace SBTK2
             mouseDrawRec = false;
             if (cuttingRectangle != null && selectedImage != null)
             {
-
                 textureRect = new TextureRect(selectedImage, cuttingRectangle, new Point(recPositionX, recPositionY));
                 textureClips.Add(textureRect);
                 panelTextureCollector.Refresh();
@@ -280,9 +276,14 @@ namespace SBTK2
             textureListManager.DragDropLeave(sender, e);
         }
 
+        /// <summary>
+        /// Drawing the cutted rectangle from panelCutTexture into the panelTextureCollector.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void panelTextureCollector_Click(object sender, EventArgs e)
         {
-            if (drawImage != null)
+            if (drawImage != null || predefinedRectangle != null)
             {
                 Panelgraphics = panelTextureCollector.CreateGraphics();
                 foreach (TextureRect tr in textureClips)
@@ -342,16 +343,15 @@ namespace SBTK2
         /// <param name="e"></param>
         private void cmb_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             predefinedRectangle = ((CustomRectangleRule)cmb.SelectedItem).rec;
 
-            
             Panelgraphics = panelCutTexture.CreateGraphics();
             Panelgraphics.DrawRectangle(pen, predefinedRectangle);
 
             // Delete existing rectangle.
-            panelCutTexture.Clear();
             Panelgraphics.Dispose();
+            panelCutTexture.Clear();
+            listViewAddedTextures.SelectedIndexChanged += new EventHandler(listViewAddedTextures_SelectedIndexChanged);
             
         }
 
