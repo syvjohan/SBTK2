@@ -36,6 +36,7 @@
             this.cmb = new System.Windows.Forms.ComboBox();
             this.btnDeleteObject = new System.Windows.Forms.Button();
             this.btnCleanPanel = new System.Windows.Forms.Button();
+            this.btnDeleteRectangels = new System.Windows.Forms.Button();
             this.panelCutTexture = new SBTK2.CustomPanel();
             this.panelTextureCollector = new SBTK2.CustomPanel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -95,7 +96,7 @@
             this.cmb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmb.FormattingEnabled = true;
-            this.cmb.Location = new System.Drawing.Point(230, 24);
+            this.cmb.Location = new System.Drawing.Point(230, 41);
             this.cmb.Name = "cmb";
             this.cmb.Size = new System.Drawing.Size(258, 23);
             this.cmb.TabIndex = 4;
@@ -119,6 +120,16 @@
             this.btnCleanPanel.Text = "Clean the Panel";
             this.btnCleanPanel.UseVisualStyleBackColor = true;
             this.btnCleanPanel.Click += new System.EventHandler(this.btnCleanPanel_Click);
+            // 
+            // btnDeleteRectangels
+            // 
+            this.btnDeleteRectangels.Location = new System.Drawing.Point(230, 12);
+            this.btnDeleteRectangels.Name = "btnDeleteRectangels";
+            this.btnDeleteRectangels.Size = new System.Drawing.Size(258, 23);
+            this.btnDeleteRectangels.TabIndex = 7;
+            this.btnDeleteRectangels.Text = "Delete Rectangles";
+            this.btnDeleteRectangels.UseVisualStyleBackColor = true;
+            this.btnDeleteRectangels.Click += new System.EventHandler(this.btnDeleteRectangels_Click);
             // 
             // panelCutTexture
             // 
@@ -161,7 +172,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1180, 618);
+            this.ClientSize = new System.Drawing.Size(1180, 657);
+            this.Controls.Add(this.btnDeleteRectangels);
             this.Controls.Add(this.btnCleanPanel);
             this.Controls.Add(this.btnDeleteObject);
             this.Controls.Add(this.cmb);
@@ -191,6 +203,7 @@
         private CustomPanel panelTextureCollector;
         private System.Windows.Forms.Button btnDeleteObject;
         private System.Windows.Forms.Button btnCleanPanel;
+        private System.Windows.Forms.Button btnDeleteRectangels;
     }
 }
 

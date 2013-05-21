@@ -76,7 +76,7 @@ namespace SBTK2
         /// <summary>
         ///  Clear the hole list of cuttedBitmaps
         /// </summary>
-        public void Clear()
+        public void ClearBitmapList()
         {
             cuttedBitmap.Clear();
         }

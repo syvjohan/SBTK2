@@ -41,7 +41,7 @@ namespace SBTK2
         // Mouse Move
         int X;
         int Y;
-        Rectangle mouseRec;
+        Point mousepoint;
 
         public FormTextureAtlas()
         {
@@ -57,10 +57,6 @@ namespace SBTK2
             canvas = new Bitmap(panelSizeX, panelSizeY);
             panelCutTexture.BackgroundImage = canvas;
 
-            //draw image in panelCutTexture
-            drawImage = new Bitmap(panelSizeX, panelSizeY);
-
-            //panelCutTexture.Paint += new PaintEventHandler(panelCutTexture_Paint);
             panelTextureCollector.Click += new EventHandler(panelTextureCollector_Click);
 
             // Use DoubbleBuffering to reduce the flickering.
@@ -103,6 +99,7 @@ namespace SBTK2
             listViewAddedTextures.Update();
         }
 
+
         /// <summary>
         /// shows a image in the panelCutTexture when the user select a image in the listViewAddedTexture.
         /// </summary>
@@ -113,6 +110,8 @@ namespace SBTK2
             {
                 int selectedImageIndex = listViewAddedTextures.SelectedItems[0].ImageIndex;
                 selectedImage = (Bitmap)textureListManager.GetImageAtIndex(selectedImageIndex);
+
+                drawImage = new Bitmap(panelSizeX, panelSizeY);
 
                 Panelgraphics = Graphics.FromImage(drawImage);
                 Brush brush = new SolidBrush(Color.White);
@@ -127,9 +126,15 @@ namespace SBTK2
         {
             Panelgraphics = panelCutTexture.CreateGraphics();
 
-            //Graphic for drawing the bitmap in the panelCutTexture
-            Panelgraphics.DrawImage(drawImage, new Point(0, 0));
-
+            if (drawImage == null)
+            {
+                panelCutTexture.Clear();
+            }
+            else
+            {
+                Panelgraphics.DrawImage(drawImage, new Point(0, 0));
+            }
+            
             // Graphics for drawing the dragging predefinedRectangle.
             Panelgraphics.DrawRectangle(pen, X, Y, predefinedRectangle.Width, predefinedRectangle.Height);
 
@@ -188,14 +193,10 @@ namespace SBTK2
         /// <summary>
         /// if mouse move is true and cutImage is not false draw a rectangle.
         /// Drawing a rectangle in a panel and get called by the the MouseMove event.
-        /// 
         /// </summary>
         /// <param name="e"></param>
         private void DrawRectangle(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && mouseDrawRec == true)
-            {
-
                 if (panelCutTexture.BackgroundImage != null)
                 {
                     this.Refresh();
@@ -211,20 +212,20 @@ namespace SBTK2
                     Panelgraphics = panelCutTexture.CreateGraphics();
                     Panelgraphics.DrawRectangle(pen, cuttingRectangle);
                 }
-            }
 
         }
 
         private void panelCutTexture_MouseMove(object sender, MouseEventArgs e)
         {
-            mouseRec  = new Rectangle(e.X, e.Y, 0, 0);
-
-            if (e.Button == MouseButtons.Left && mouseDrawRec == false && predefinedRectangle.IntersectsWith(mouseRec))
+ 
+            mousepoint = new Point(e.X, e.Y);
+            
+            if (e.Button == MouseButtons.Left && mouseDrawRec == false && RectsIntersect(mousepoint, predefinedRectangle))
             {
                 MovingRec(e); 
             }
 
-            else if (mouseDrawRec == true)
+            else if (e.Button == MouseButtons.Left && mouseDrawRec == true)
             {
                 DrawRectangle(e);
 
@@ -347,12 +348,44 @@ namespace SBTK2
 
             Panelgraphics = panelCutTexture.CreateGraphics();
             Panelgraphics.DrawRectangle(pen, predefinedRectangle);
+        }
 
+        public void DrawRectangle(Rectangle r)
+        {
+
+           
+            //save the rectangle backgorund
+            
+
+            //draw
+        }
+
+        private bool RectsIntersect(Point p, Rectangle preRec)
+        {
+            if (p.X < preRec.X)
+            {
+                return false;
+            }
+            if (p.Y < preRec.Y)
+            {
+                return false;
+            }
+            if (p.X > preRec.X + preRec.Width)
+            {
+                return false;
+            }
+            if (p.Y > preRec.Y + preRec.Height)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         private void MovingRec(MouseEventArgs e)
         {
-
             // For the rectangle move.
                 X = e.X;
                 Y = e.Y;
@@ -381,7 +414,11 @@ namespace SBTK2
         {
             textureClips.Clear();
             panelTextureCollector.Clear();
-            
+        }
+
+        private void btnDeleteRectangels_Click(object sender, EventArgs e)
+        {
+            cmb.SelectedIndex = 0;
         }
 
     }
