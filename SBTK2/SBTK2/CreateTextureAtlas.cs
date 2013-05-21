@@ -14,7 +14,7 @@ namespace SBTK2
     {
         // Classes
         TextureListManager textureListManager = new TextureListManager();
-        TextureRect textureRect; 
+        TextureRect textureRect;
 
         // For the rectangle 
         private Rectangle cuttingRectangle;
@@ -48,7 +48,7 @@ namespace SBTK2
             InitializeComponent();
             InitializeLocalComponents();
             FillCmb();
-   
+
         }
 
         private void InitializeLocalComponents()
@@ -134,7 +134,7 @@ namespace SBTK2
             {
                 Panelgraphics.DrawImage(drawImage, new Point(0, 0));
             }
-            
+
             // Graphics for drawing the dragging predefinedRectangle.
             Panelgraphics.DrawRectangle(pen, X, Y, predefinedRectangle.Width, predefinedRectangle.Height);
 
@@ -197,33 +197,33 @@ namespace SBTK2
         /// <param name="e"></param>
         private void DrawRectangle(MouseEventArgs e)
         {
-                if (panelCutTexture.BackgroundImage != null)
-                {
-                    this.Refresh();
+            if (panelCutTexture.BackgroundImage != null)
+            {
+                this.Refresh();
 
-                    int width = e.X - recPositionX;
-                    int height = e.Y - recPositionY;
+                int width = e.X - recPositionX;
+                int height = e.Y - recPositionY;
 
-                    cuttingRectangle = new Rectangle(recPositionX,
-                        recPositionY,
-                        width,
-                        height);
+                cuttingRectangle = new Rectangle(recPositionX,
+                    recPositionY,
+                    width,
+                    height);
 
-                    Panelgraphics = panelCutTexture.CreateGraphics();
-                    Panelgraphics.DrawRectangle(pen, cuttingRectangle);
-                }
+                Panelgraphics = panelCutTexture.CreateGraphics();
+                Panelgraphics.DrawRectangle(pen, cuttingRectangle);
+            }
 
         }
 
         private void panelCutTexture_MouseMove(object sender, MouseEventArgs e)
         {
             mousepoint = new Point(e.X, e.Y);
-            
-            if(e.Button != MouseButtons.Left) return;
-            
+
+            if (e.Button != MouseButtons.Left) return;
+
             if (RectsIntersect(mousepoint, predefinedRectangle))
             {
-                MovingRec(e); 
+                MovingRec(e);
             }
             //else
             //{
@@ -332,7 +332,7 @@ namespace SBTK2
             cmb.Items.Add(CustomRectangleRule.r128);
             cmb.Items.Add(CustomRectangleRule.r256);
             cmb.SelectedIndex = 0; // sets the first item in the list as start choice (Title cmb).
-  
+
         }
 
         /// <summary>
@@ -342,12 +342,17 @@ namespace SBTK2
         /// <param name="e"></param>
         private void cmb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            panelCutTexture.Clear();
 
             predefinedRectangle = ((CustomRectangleRule)cmb.SelectedItem).rec;
 
+            
             Panelgraphics = panelCutTexture.CreateGraphics();
             Panelgraphics.DrawRectangle(pen, predefinedRectangle);
+
+            // Delete existing rectangle.
+            panelCutTexture.Clear();
+            Panelgraphics.Dispose();
+            
         }
 
 
@@ -369,34 +374,34 @@ namespace SBTK2
             {
                 return false;
             }
-                       
-            return true;            
+
+            return true;
         }
 
         private void MovingRec(MouseEventArgs e)
         {
             // For the rectangle move.
-                X = e.X;
-                Y = e.Y;
+            X = e.X;
+            Y = e.Y;
 
-                if (X > drawImage.Width)
-                {
-                    X = drawImage.Width - (predefinedRectangle.Right);
-                }
-                if (X < drawImage.Width)
-                {
-                    X = drawImage.Width + (predefinedRectangle.Left);
-                }
-                if (Y < drawImage.Height)
-                {
-                    Y = drawImage.Height - (predefinedRectangle.Top);
-                }
-                if (Y > drawImage.Height)
-                {
-                    Y = drawImage.Height + (predefinedRectangle.Bottom);
-                }
+            if (X > drawImage.Width)
+            {
+                X = drawImage.Width - (predefinedRectangle.Right);
+            }
+            if (X < drawImage.Width)
+            {
+                X = drawImage.Width + (predefinedRectangle.Left);
+            }
+            if (Y < drawImage.Height)
+            {
+                Y = drawImage.Height - (predefinedRectangle.Top);
+            }
+            if (Y > drawImage.Height)
+            {
+                Y = drawImage.Height + (predefinedRectangle.Bottom);
+            }
 
-                panelCutTexture.Invalidate();
+            panelCutTexture.Invalidate();
         }
 
         private void btnCleanPanel_Click(object sender, EventArgs e)
