@@ -225,11 +225,11 @@ namespace SBTK2
             {
                 MovingRec(e); 
             }
-            else
-            {
-                //clear old one                
-                DrawRectangle(e);
-            }
+            //else
+            //{
+            //    Panelgraphics.Dispose();
+            //    DrawRectangle(e);
+            //}
         }
 
         /// <summary>
@@ -350,15 +350,6 @@ namespace SBTK2
             Panelgraphics.DrawRectangle(pen, predefinedRectangle);
         }
 
-        public void DrawRectangle(Rectangle r)
-        {
-
-           
-            //save the rectangle backgorund
-            
-
-            //draw
-        }
 
         private bool RectsIntersect(Point p, Rectangle preRec)
         {
@@ -388,21 +379,21 @@ namespace SBTK2
                 X = e.X;
                 Y = e.Y;
 
-                if (X > panelCutTexture.Right)
+                if (X > drawImage.Width)
                 {
-                    X = panelCutTexture.Width - (predefinedRectangle.Right + (predefinedRectangle.Width / 2));
+                    X = drawImage.Width - (predefinedRectangle.Right);
                 }
-                if (X < panelCutTexture.Width)
+                if (X < drawImage.Width)
                 {
-                    X = panelCutTexture.Left - (predefinedRectangle.Left + (predefinedRectangle.Width / 2));
+                    X = drawImage.Width + (predefinedRectangle.Left);
                 }
-                if (Y < panelCutTexture.Top)
+                if (Y < drawImage.Height)
                 {
-                    Y = panelCutTexture.Top - (predefinedRectangle.Top + (predefinedRectangle.Height / 2));
+                    Y = drawImage.Height - (predefinedRectangle.Top);
                 }
-                if (Y > panelCutTexture.Bottom)
+                if (Y > drawImage.Height)
                 {
-                    Y = panelCutTexture.Bottom - (predefinedRectangle.Bottom + (predefinedRectangle.Height / 2));
+                    Y = drawImage.Height + (predefinedRectangle.Bottom);
                 }
 
                 panelCutTexture.Invalidate();
@@ -417,6 +408,10 @@ namespace SBTK2
         private void btnDeleteRectangels_Click(object sender, EventArgs e)
         {
             cmb.SelectedIndex = 0;
+
+            Panelgraphics.Dispose();
+            panelCutTexture.Clear();
+            listViewAddedTextures.SelectedIndexChanged += new EventHandler(listViewAddedTextures_SelectedIndexChanged);
         }
 
     }
