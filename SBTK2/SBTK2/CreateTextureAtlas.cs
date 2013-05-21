@@ -217,20 +217,19 @@ namespace SBTK2
 
         private void panelCutTexture_MouseMove(object sender, MouseEventArgs e)
         {
- 
             mousepoint = new Point(e.X, e.Y);
             
-            if (e.Button == MouseButtons.Left && mouseDrawRec == false && RectsIntersect(mousepoint, predefinedRectangle))
+            if(e.Button != MouseButtons.Left) return;
+            
+            if (RectsIntersect(mousepoint, predefinedRectangle))
             {
                 MovingRec(e); 
             }
-
-            else if (e.Button == MouseButtons.Left && mouseDrawRec == true)
+            else
             {
+                //clear old one                
                 DrawRectangle(e);
-
             }
-
         }
 
         /// <summary>
@@ -243,6 +242,7 @@ namespace SBTK2
             mouseDrawRec = false;
             if (cuttingRectangle != null && selectedImage != null)
             {
+
                 textureRect = new TextureRect(selectedImage, cuttingRectangle, new Point(recPositionX, recPositionY));
                 textureClips.Add(textureRect);
                 panelTextureCollector.Refresh();
@@ -378,10 +378,8 @@ namespace SBTK2
             {
                 return false;
             }
-            else
-            {
-                return true;
-            }
+                       
+            return true;            
         }
 
         private void MovingRec(MouseEventArgs e)
@@ -392,9 +390,9 @@ namespace SBTK2
 
                 if (X > panelCutTexture.Right)
                 {
-                    X = panelCutTexture.Right - (predefinedRectangle.Right + (predefinedRectangle.Width / 2));
+                    X = panelCutTexture.Width - (predefinedRectangle.Right + (predefinedRectangle.Width / 2));
                 }
-                if (X < panelCutTexture.Left)
+                if (X < panelCutTexture.Width)
                 {
                     X = panelCutTexture.Left - (predefinedRectangle.Left + (predefinedRectangle.Width / 2));
                 }
